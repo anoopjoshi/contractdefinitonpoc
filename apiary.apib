@@ -1,0 +1,64 @@
+FORMAT: 1A
+HOST: http://polls.apiblueprint.org/
+
+# anoopjoshi
+
+Polls is a simple API allowing consumers to view polls and vote in them.
+
+## Guest Collection [/questions]
+
+### List All Guest [GET]
+
++ Response 200 (application/json)
+
+        [
+           {
+           "mediaItems":{"lastModifiedDate":123456789,"mediaTypeId":"sample mediaTypeId","guestId":"sample guestId","mediaItemAddress":"sample mediaItemAddress","mediaItemId":"sample mediaItemId"},
+           "visas":{"visaTypeId":"sample visaTypeId","expiryDate":123456789,"lastModifiedDate":123456789,"guestId":"sample guestId","mediaItemId":"sample mediaItemId","issueDate":123456789,"number":"sample number","issueCountryId":"sample issueCountryId","numberofEntries":"sample numberofEntries","visaId":"sample visaId"},"id":"sample id","addedDate":123456789,"specialNeeds":{"addedDate":"sample addedDate","specialNeedId":"sample specialNeedId","guestId":"sample guestId","specialNeedTypeId":"sample specialNeedTypeId"},"loyaltyLevels":{"numberOfCruiseNights":1,"vIFPNumber":"sample vIFPNumber","loyaltyLevelId":"sample loyaltyLevelId","lastModifiedDate":123456789,"guestId":"sample guestId","loyaltyLevelTypeId":"sample loyaltyLevelTypeId"},"lastModifiedDate":123456789,"identifications":{"documentTypeId":"sample documentTypeId","expiryDate":123456789,"lastModifiedDate":"sample lastModifiedDate","guestId":"sample guestId","scanCopyMediaItemId":"sample scanCopyMediaItemId","number":"sample number","issueCountryId":"sample issueCountryId","guestImageMediaItemId":"sample guestImageMediaItemId","identificationId":"sample identificationId"},"personalDetail":{"middleName":"sample middleName","lastName":"sample lastName","title":"sample title","birthdate":123456789,"gender":"sample gender","maritalStatus":"sample maritalStatus","birthCountryId":"sample birthCountryId","firstName":"sample firstName","citizenshipCountryId":"sample citizenshipCountryId"},"addresses":{"countryId":"sample countryId","zip":"sample zip","stateId":"sample stateId","state":"sample state","lastModifiedDate":123456789,"guestId":"sample guestId","line1":"sample line1","addressTypeId":"sample addressTypeId","addressId":"sample addressId","city":"sample city"},"relationships":{"fromRelationId":"sample fromRelationId","relatedWithGuestId":"sample relatedWithGuestId","relationshipId":"sample relationshipId","lastModifiedDate":123456789,"guestId":"sample guestId","toRelationId":"sample toRelationId"}}
+        ]
+
+### Create a New Question [POST]
+
+You may create your own question using this action. It takes a JSON
+object containing a question and a collection of answers in the
+form of choices.
+
++ Request (application/json)
+
+        {
+            "question": "Favourite programming language?",
+            "choices": [
+                "Swift",
+                "Python",
+                "Objective-C",
+                "Ruby"
+            ]
+        }
+
++ Response 201 (application/json)
+
+    + Headers
+
+            Location: /questions/2
+
+    + Body
+
+            {
+                "question": "Favourite programming language?",
+                "published_at": "2015-08-05T08:40:51.620Z",
+                "choices": [
+                    {
+                        "choice": "Swift",
+                        "votes": 0
+                    }, {
+                        "choice": "Python",
+                        "votes": 0
+                    }, {
+                        "choice": "Objective-C",
+                        "votes": 0
+                    }, {
+                        "choice": "Ruby",
+                        "votes": 0
+                    }
+                ]
+            }
