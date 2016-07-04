@@ -1,64 +1,394 @@
 FORMAT: 1A
-HOST: http://polls.apiblueprint.org/
+HOST: http://172.26.248.151:8080/guestservice
 
-# anoopjoshi
+# Guest Service
+The purpose of this service is to manage Guest details like Personal Details, Identification details, Visa details, Social media account details, Loyalty Levels etc.
+This document explains how to get started using the Guest api. This document is intended for developers who want to write applications that can interact with the Guest API.
+The main features of the API are as follows-
 
-Polls is a simple API allowing consumers to view polls and vote in them.
+ 
 
-## Guest Collection [/questions]
+- Delete guest Information.
 
-### List All Guest [GET]
+- Retrieve guests information by guest id
+
+- Update guest information
+
+- Retrieve guests information list
+
+- Insert Guest Information
+
+- Retrieve guests information by user account id
+
+# Group guest
+
+## Guests By Id [/guests/{id}]
++ Parameters
+    + id (, required)
+
+        guest id to extract guest record
+        
+### GuestsById [GET]
+Retrieves a guest based on guest id
 
 + Response 200 (application/json)
 
-        [
-           {
-           "mediaItems":{"lastModifiedDate":123456789,"mediaTypeId":"sample mediaTypeId","guestId":"sample guestId","mediaItemAddress":"sample mediaItemAddress","mediaItemId":"sample mediaItemId"},
-           "visas":{"visaTypeId":"sample visaTypeId","expiryDate":123456789,"lastModifiedDate":123456789,"guestId":"sample guestId","mediaItemId":"sample mediaItemId","issueDate":123456789,"number":"sample number","issueCountryId":"sample issueCountryId","numberofEntries":"sample numberofEntries","visaId":"sample visaId"},"id":"sample id","addedDate":123456789,"specialNeeds":{"addedDate":"sample addedDate","specialNeedId":"sample specialNeedId","guestId":"sample guestId","specialNeedTypeId":"sample specialNeedTypeId"},"loyaltyLevels":{"numberOfCruiseNights":1,"vIFPNumber":"sample vIFPNumber","loyaltyLevelId":"sample loyaltyLevelId","lastModifiedDate":123456789,"guestId":"sample guestId","loyaltyLevelTypeId":"sample loyaltyLevelTypeId"},"lastModifiedDate":123456789,"identifications":{"documentTypeId":"sample documentTypeId","expiryDate":123456789,"lastModifiedDate":"sample lastModifiedDate","guestId":"sample guestId","scanCopyMediaItemId":"sample scanCopyMediaItemId","number":"sample number","issueCountryId":"sample issueCountryId","guestImageMediaItemId":"sample guestImageMediaItemId","identificationId":"sample identificationId"},"personalDetail":{"middleName":"sample middleName","lastName":"sample lastName","title":"sample title","birthdate":123456789,"gender":"sample gender","maritalStatus":"sample maritalStatus","birthCountryId":"sample birthCountryId","firstName":"sample firstName","citizenshipCountryId":"sample citizenshipCountryId"},"addresses":{"countryId":"sample countryId","zip":"sample zip","stateId":"sample stateId","state":"sample state","lastModifiedDate":123456789,"guestId":"sample guestId","line1":"sample line1","addressTypeId":"sample addressTypeId","addressId":"sample addressId","city":"sample city"},"relationships":{"fromRelationId":"sample fromRelationId","relatedWithGuestId":"sample relatedWithGuestId","relationshipId":"sample relationshipId","lastModifiedDate":123456789,"guestId":"sample guestId","toRelationId":"sample toRelationId"}}
-        ]
+        {
+            OK
+        }
+        
+    +   Attributes (Guest)
 
-### Create a New Question [POST]
++ Response 401 
 
-You may create your own question using this action. It takes a JSON
-object containing a question and a collection of answers in the
-form of choices.
+        {
+            unauthorized
+        }
+        
++ Response 500
+
+        {
+            Internal server error
+        }
+        
++ Response 404
+
+        {
+            Not Found
+        }
+
+### update Guest [PUT]
+update guest.
 
 + Request (application/json)
 
+    + Attributes (Guest)
+
++ Response 200 (application/json)
+
         {
-            "question": "Favourite programming language?",
-            "choices": [
-                "Swift",
-                "Python",
-                "Objective-C",
-                "Ruby"
-            ]
+            OK
         }
+
+    + Attributes (Guest)
+
++ Response 500 
+
+        {
+            Internal Server Error
+        }
+
++ Response 404 
+
+        {
+            Not Found
+        }
+
++ Response 401 
+
+        {
+            Unauthorized
+        }
+
+### delete Guest [DELETE]
+Delete a guest
++ Response 200 (application/json)
+
+        {
+            OK
+        }
+    
++ Response 500 
+
+        {
+            Internal Server Error
+        }
+
++ Response 404 
+
+        {
+            Not Found
+        }
+
++ Response 401 
+
+        {
+            Unauthorized
+        }
+
+## Guests [/guests{?lastNameContains,firstNameContains,guestIds,shipId,stateroomIds,reservationStartDate,reservationEndDate,modifiedParts,reservationIds,passports,name,depth,pageNumber,maxResult,orderBy}]
+
+### list Guests [GET]
+list guest data
+
++ Parameters
+
+    + lastNameContains (, optional)
+
+        search based on last name
+    
+    + firstNameContains (, optional)
+
+        search based on first name
+
+    + guestIds (, optional)
+
+        search based on guestids
+
+    + shipId (, optional)
+
+        search based on ship id
+
+    + stateroomIds (, optional)
+
+        search based on state room ids
+
+    + reservationStartDate (, optional)
+
+        search based on reservation Start Date
+
+    + reservationEndDate (, optional)
+
+        search based on reservation End Date
+
+    + modifiedParts (, optional)
+
+        search based on modified Parts
+
+    + reservationIds (, optional)
+
+        search based on reservation Ids
+
+    + passports (, optional)
+
+        search based on passport
+
+    + name (, optional)
+
+        search based on name
+        
++ Response 200 (application/json)
+
+        {
+            OK
+        }
+
+    + Attributes (array[Guest])    
+    
++ Response 500
+
+        {
+            Internal server error
+        }
+        
++ Response 404 
+
+        {
+            Not Found
+        }
+
++ Response 401 
+
+        {
+            Unauthorized
+        }
+
+## Guests [/guests]
+
+### insert Guest [POST]
+insert guest data
+
++ Request (application/json)
+
+    + Attributes (Guest)
 
 + Response 201 (application/json)
 
-    + Headers
+        {
+            Created
+        }
 
-            Location: /questions/2
+    + Attributes (Guest)
 
-    + Body
++ Response 500
 
-            {
-                "question": "Favourite programming language?",
-                "published_at": "2015-08-05T08:40:51.620Z",
-                "choices": [
-                    {
-                        "choice": "Swift",
-                        "votes": 0
-                    }, {
-                        "choice": "Python",
-                        "votes": 0
-                    }, {
-                        "choice": "Objective-C",
-                        "votes": 0
-                    }, {
-                        "choice": "Ruby",
-                        "votes": 0
-                    }
-                ]
-            }
+        {
+            Internal server error
+        }
+        
++ Response 404 
+
+        {
+            Not Found
+        }
+
++ Response 401 
+
+        {
+            Unauthorized
+        }
+
+## Guests Account By Id [/guests/account/{id}]
+
++ Parameters
+    + id (, required)
+
+        user account id to extract guest record
+
+
+### GuestsAccountById [GET]
+load guest by user account id
+
++ Response 200 (application/json)
+
+        {
+            OK
+        }
+
+    + Attributes (Guest)
+
++ Response 500
+
+        {
+            Internal server error
+        }
+        
++ Response 404 
+
+        {
+            Not Found
+        }
+
++ Response 401 
+
+        {
+            Unauthorized
+        }
+        
+# Data Structures
+
+## Guest (object)
+
++ id: 1234 (number, required)
++ title: MSTR (string, optional) 
++ firstName: ETHAN (string, optional) 
++ middleName: MLAWSKI (string, optional) 
++ lastName: MLAWSKI (string, optional) 
++ nickName: xyz (string, optional) 
++ preferredName: xyz (string, optional) 
++ suffix: xyz (string, optional) 
++ birthDate: '1972-10-03' (string, optional) 
++ gender: M (string, optional) 
++ maritalStatus: Unknown (string, optional) 
++ occupation: xyz (string, optional) 
++ email: 'kristie_buss@yahoo.com' (string, optional) 
++ alternateEmail: 'kristie_buss@yahoo.com' (string, optional) 
++ anniversaryDate: '1972-10-03' (string, optional) 
++ birthCountryId (number, optional) 
++ citizenshipCountryId (number, optional) 
++ userAccountId (number, optional) 
++ addedDate (string, required) 
++ lastModifiedDate (string, required) 
++ deletedFlag (boolean, required)+ `phones` (array[phone], optional) 
++ reservations (array[reservation], optional) 
++ addresses (array[address], optional) 
++ identifications (array[identification], optional) 
++ visas (array[visa], optional) 
++ loyaltyLevels (array[loyaltyLevel], optional) 
+
+## phone (object)
+
+### Properties
++ phoneId: 75021 (number, required) 
++ phoneTypeId: 1 (string, optional) 
++ countryId: 232 (number, optional) 
++ areaCode: xyz (string, optional) 
++ number: 2019703511 (string, optional) 
++ lastModifiedDate: '2016-03-29' (string, required) 
+
+
+## reservation (object)
+
+### Properties
++ guestReservationId: 30826 (number, required) 
++ reservationNumber: 7Q5QP7 (string, optional) 
++ reservationId: 7026 (number, optional) 
++ stateroomId: 849 (number, optional) 
++ embarkDate: '2016-03-21' (string, optional) 
++ lastModifiedDate: 1459313689000 (string, optional) 
++ vipflag: 1 (boolean, optional) 
++ primaryFlag: 1 (boolean, optional) 
++ debarkDate: '2016-04-03' (string, optional) 
++ statusId: 1 (string, optional) 
++ loyaltyLevelTypeId: 102 (number, optional) 
++ identificationId: 84159 (number, optional) 
++ idVerifiedFlag: 0 (boolean, optional) 
++ sequenceNumber: 1 (number, optional) 
++ folioNumber: 4197 (string, optional) 
++ folios (array[folio], optional) 
+
+
+## folio (object)
+
+### Properties
++ folioId: 55921 (string, required) 
++ folioNumber: 4197 (string, optional) 
++ guestReservationId: 7 (number, optional) 
++ accessCardNumber: 31522105 (string, optional) 
++ folioStatus: A (string, optional) 
++ isGangwayAllowed: 0 (boolean, optional) 
+
+
+## address (object)
+
+
+### Properties
++ addressId: 48443 (number, required) 
++ line1: APT 202 (string, optional) 
++ line2:  100 MISTY PINES CIR (string, optional) 
++ city: WEST PARK (string, optional) 
++ state: FL (string, optional) 
++ lastModifiedDate: 1458556148000 (string, required) 
++ stateId: 103 (number, optional) 
++ countryId: 232 (number, optional) 
++ zip: 07081 (string, optional) 
+
+
+## identification (object)
+
+
+### Properties
++ identificationId: 84259 (number, required) 
++ documentTypeId: 1 (number, optional) 
++ number: 221377293 (string, optional) 
++ issueCountryId: 101 (number, optional) 
++ expiryDate: '2017-02-14' (string, optional) 
++ scanCopyMediaItemId: 5236 (number, optional) 
++ guestImageMediaItemId: 1235 (number, optional) 
++ lastModifiedDate: 1459240885000 (string, required) 
++ guestId: 4275 (number, optional) 
+
+
+## visa (object)
+
+
+### Properties
++ visaId: 1001 (number, required) 
++ issueCountryId: 101 (number, optional) 
++ number: AX102 (string, optional) 
++ issueDate: '2016-03-29' (string, optional) 
++ expiryDate: '2016-03-29' (string, optional) 
++ numberOfEntries: 12 (string, optional) 
++ mediaItemId: 102 (number, optional) 
++ lastModifiedDate: '2016-03-29' (string, required) 
+
+
+## loyaltyLevel (object)
+
+
+### Properties
++ loyaltyLevelId: 79692 (number, required) 
++ loyaltyLevelTypeId: 101 (number, optional) 
++ numberOfCruiseNights: 8 (number, optional) 
++ vifpnumber: xyz (string, optional) 
++ lastModifiedDate: '2016-03-29' (string, required)
